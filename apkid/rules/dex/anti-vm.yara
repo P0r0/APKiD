@@ -587,5 +587,5 @@ rule framegia_emulator_detector : anti_vm
         $sf_2 = "/system/bin"
 
     condition:
-        checks_qemu_file and  (1 of ($a_*))) and (1 of ($s_*)) and (all of ($p_*)) and (all of ($sf_*))
+        checks_qemu_file and  (1 of ($a_*)) and (1 of ($s_*)) and (all of ($p_*)) and (all of ($sf_*))
 }
