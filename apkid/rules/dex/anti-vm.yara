@@ -117,6 +117,12 @@ rule checks_build_model : anti_vm
     $str_4 = "Android SDK built for x86"
     $str_5 = "Full Android on x86"
 
+    $str_6 = "droid4x"
+    $str_7 = "Genymotion"
+    $str_8 = "sdk_x86"
+    $str_9 = "vbox86p"
+    $str_10 = "nox"
+
   condition:
     uses_build_class
     and $prop
@@ -517,6 +523,32 @@ rule checks_qemu_file : anti_vm
     1 of them
 }
 
+rule checks_qemu_properties : anti_vm
+{
+    meta:
+        description = "Possible vm check"
+
+    strings:
+        $q_1 = "init.svc.qemud"
+        $q_2 = "init.svc.qemu-props"
+        $q_3 = "qemu.hw.mainkeys"
+        $q_4 = "qemu.sf.fake_camera"
+        $q_5 = "qemu.sf.lcd_density"
+        $q_6 = "ro.kernel.qemu.gles"
+        $q_7 = "ro.kernel.qemu"
+
+        $q_8 = "ro.bootloader"
+        $q_9 = "ro.bootmode"
+        $q_10 = "ro.hardware"
+        $q_11 = "ro.product.device"
+        $q_12 = "ro.product.model"
+        $q_13 = "ro.product.name"
+        $q_14 = "ro.serialno"
+
+    condition:
+        any of ($q_*) 
+}
+
 rule possible_vm_check : anti_vm
 {
   meta:
@@ -527,4 +559,33 @@ rule possible_vm_check : anti_vm
 
   condition:
     any of them
+}
+
+rule framegia_emulator_detector : anti_vm
+{
+    meta:
+        description = "A small library that can be used to perform emulator detection"
+        url = "https://github.com/framgia/android-emulator-detector"
+
+    strings:
+        $a_1 = "com.framgia.android.emulator.EmulatorDetector"
+        $a_2 = "com.framgia.android.emulator.OnEmulatorDetectorListener"
+        $a_3 = "com.framgia.android.emulator"
+
+        $s_1 = "fstab.andy"
+        $s_2 = "ueventd.andy.rc"
+        $s_3 = "Andy"
+        $s_4 = "Nox"
+
+        //packages that are checked at runtime
+        $p_1 = "com.google.android.launcher.layouts.genymotion"
+        $p_2 = "com.bluestacks"
+        $p_3 = "com.bignox.app"
+
+        //system files that are checked
+        $sf_1 = "/system/bin/netcfg"
+        $sf_2 = "/system/bin"
+
+    condition:
+        checks_qemu_file and  (1 of ($a_*))) and (1 of ($s_*)) and (all of ($p_*)) and (all of ($sf_*))
 }
