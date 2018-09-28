@@ -564,8 +564,9 @@ rule possible_vm_check : anti_vm
 rule framegia_emulator_detector : anti_vm
 {
     meta:
-        description = "A small library that can be used to perform emulator detection"
+        description = "Framgia: A small library that can be used to perform emulator detection"
         url = "https://github.com/framgia/android-emulator-detector"
+        sample1 = "https://github.com/P0r0/apksamples/blob/master/crackproof/jp.co.cygames.princessconnectredive_2018-09-10.apk"
 
     strings:
         $a_1 = "com.framgia.android.emulator.EmulatorDetector"
